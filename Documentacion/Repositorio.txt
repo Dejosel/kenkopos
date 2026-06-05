@@ -1,0 +1,16 @@
+Proyecto: KenkoPOS
+
+Repositorio:
+https://github.com/Dejosel/kenkopos
+
+Versión entregada:
+v1.1.0
+
+Evidencia:
+GA7-220501096-AA2-EV02 - Módulos de software codificados y probados
+
+Rama principal:
+main
+
+Tag de versión:
+v1.1.0
