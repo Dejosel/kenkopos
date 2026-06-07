@@ -1,0 +1,19 @@
+Proyecto: KenkoPOS
+
+Repositorio:
+https://github.com/Dejosel/kenkopos
+
+Versión entregada:
+v2.0.0
+
+Evidencia:
+GA7-220501096-AA3-EV01 - Codificación de módulos del software Stand alone, web y móvil de acuerdo al proyecto a desarrollar aplicando un framework.
+
+Framework:
+Laravel (PHP)
+
+Rama principal:
+main
+
+Tag de versión:
+v2.0.0
