@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "c76e273f-5b12-4278-831e-450f7f329976",
+		"name": "KenkoPOS API",
+		"description": "Colección de pruebas para la API de Autenticación de KenkoPOS (SENA GA7-220501096-AA5-EV01)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Usuario de Prueba\",\n    \"email\": \"prueba@kenkopos.com\",\n    \"password\": \"secreta123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost/kenkopos/api/register.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"kenkopos",
+						"api",
+						"register.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"prueba@kenkopos.com\",\n    \"password\": \"secreta123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost/kenkopos/api/login.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"kenkopos",
+						"api",
+						"login.php"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
