@@ -49,6 +49,8 @@ class ProductController
             $this->productModel->name = $postData['name'];
             $this->productModel->sku = $postData['sku'];
             $this->productModel->price = (float)$postData['price'];
+            $this->productModel->category = !empty($postData['category']) ? $postData['category'] : 'General';
+            $this->productModel->color = !empty($postData['color']) ? $postData['color'] : null;
 
             if ($this->productModel->create()) {
                 Response::redirect('list.php?msg=created');
@@ -70,6 +72,8 @@ class ProductController
             $this->productModel->name = $postData['name'];
             $this->productModel->sku = $postData['sku'];
             $this->productModel->price = (float)$postData['price'];
+            $this->productModel->category = !empty($postData['category']) ? $postData['category'] : 'General';
+            $this->productModel->color = !empty($postData['color']) ? $postData['color'] : null;
 
             if ($this->productModel->update()) {
                 Response::redirect('list.php?msg=updated');

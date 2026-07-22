@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once __DIR__ . '/../../app/Controllers/ProductController.php';
 use App\Controllers\ProductController;
 
@@ -18,7 +21,10 @@ $products = $controller->index();
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Gestión de Productos - KenkoPOS</h2>
-            <a href="create.php" class="btn btn-primary">Nuevo Producto</a>
+            <div>
+                <a href="../pos.php" class="btn btn-success me-2">Pantalla POS (SambaPOS)</a>
+                <a href="create.php" class="btn btn-primary">Nuevo Producto</a>
+            </div>
         </div>
 
         <?php if(isset($_GET['msg'])): ?>
@@ -36,6 +42,8 @@ $products = $controller->index();
                             <th>ID</th>
                             <th>SKU</th>
                             <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Color de Botón</th>
                             <th>Precio</th>
                             <th>Acciones</th>
                         </tr>
@@ -47,6 +55,17 @@ $products = $controller->index();
                                     <td><?= htmlspecialchars($product['product_id']) ?></td>
                                     <td><span class="badge bg-secondary"><?= htmlspecialchars($product['sku']) ?></span></td>
                                     <td><?= htmlspecialchars($product['name']) ?></td>
+                                    <td><span class="badge bg-info text-dark"><?= htmlspecialchars($product['category'] ?? 'General') ?></span></td>
+                                    <td>
+                                        <?php if(!empty($product['color'])): ?>
+                                            <div class="d-flex align-items-center">
+                                                <span class="d-inline-block rounded-circle me-2" style="width: 15px; height: 15px; background-color: <?= htmlspecialchars($product['color']) ?>; border: 1px solid #777;"></span>
+                                                <code><?= htmlspecialchars($product['color']) ?></code>
+                                            </div>
+                                        <?php else: ?>
+                                            <span class="text-muted">Por defecto</span>
+                                        <?php endif; ?>
+                                    </td>
                                     <td>$ <?= number_format($product['price'], 2) ?></td>
                                     <td>
                                         <a href="edit.php?id=<?= $product['product_id'] ?>" class="btn btn-sm btn-warning">Editar</a>
@@ -56,7 +75,7 @@ $products = $controller->index();
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="5" class="text-center">No hay productos registrados.</td>
+                                <td colspan="7" class="text-center">No hay productos registrados.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>

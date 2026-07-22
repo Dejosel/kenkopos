@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once __DIR__ . '/../../app/Controllers/ProductController.php';
 use App\Controllers\ProductController;
 
@@ -53,11 +56,30 @@ if (!$product) {
                                 <label for="name" class="form-label">Nombre del Producto</label>
                                 <input type="text" class="form-control" id="name" name="name" value="<?= htmlspecialchars($product['name']) ?>" required maxlength="255">
                             </div>
+                            <?php $currentCat = $product['category'] ?? 'General'; ?>
                             <div class="mb-3">
-                                <label for="price" class="form-label">Precio</label>
+                                <label for="category" class="form-label">Categoría</label>
+                                <select class="form-select" id="category" name="category">
+                                    <option value="Platos Fuertes" <?= $currentCat === 'Platos Fuertes' ? 'selected' : '' ?>>Platos Fuertes</option>
+                                    <option value="Entradas" <?= $currentCat === 'Entradas' ? 'selected' : '' ?>>Entradas</option>
+                                    <option value="Bebidas" <?= $currentCat === 'Bebidas' ? 'selected' : '' ?>>Bebidas</option>
+                                    <option value="Postres" <?= $currentCat === 'Postres' ? 'selected' : '' ?>>Postres</option>
+                                    <option value="Farmacia" <?= $currentCat === 'Farmacia' ? 'selected' : '' ?>>Farmacia</option>
+                                    <option value="General" <?= $currentCat === 'General' ? 'selected' : '' ?>>General</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Precio ($)</label>
                                 <input type="number" step="0.01" class="form-control" id="price" name="price" value="<?= htmlspecialchars($product['price']) ?>" required>
                             </div>
-                            <div class="d-flex justify-content-between">
+                            <div class="mb-3">
+                                <label for="color" class="form-label">Color de Botón en POS</label>
+                                <div class="d-flex align-items-center gap-2">
+                                    <input type="color" class="form-control form-control-color" id="color" name="color" value="<?= htmlspecialchars($product['color'] ?? '#0d6efd') ?>" title="Seleccionar color">
+                                    <span class="text-muted">Haz clic en el cuadro para elegir un color distintivo.</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-4">
                                 <a href="list.php" class="btn btn-secondary">Cancelar</a>
                                 <button type="submit" class="btn btn-primary">Actualizar Producto</button>
                             </div>

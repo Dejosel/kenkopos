@@ -17,6 +17,8 @@ class Product
     public string $name;
     public string $sku;
     public float $price;
+    public string $category = 'General';
+    public ?string $color = null;
     public ?string $created_at = null;
 
     /**
@@ -66,17 +68,21 @@ class Product
      */
     public function create(): bool
     {
-        $query = "INSERT INTO " . $this->table_name . " (name, sku, price) VALUES (:name, :sku, :price)";
+        $query = "INSERT INTO " . $this->table_name . " (name, sku, price, category, color) VALUES (:name, :sku, :price, :category, :color)";
         $stmt = $this->conn->prepare($query);
 
         // Limpiar datos
         $this->name = htmlspecialchars(strip_tags($this->name));
         $this->sku = htmlspecialchars(strip_tags($this->sku));
+        $this->category = htmlspecialchars(strip_tags($this->category));
+        $this->color = $this->color ? htmlspecialchars(strip_tags($this->color)) : null;
 
         // Enlazar parámetros
         $stmt->bindParam(':name', $this->name);
         $stmt->bindParam(':sku', $this->sku);
         $stmt->bindParam(':price', $this->price);
+        $stmt->bindParam(':category', $this->category);
+        $stmt->bindParam(':color', $this->color);
 
         return $stmt->execute();
     }
@@ -88,17 +94,21 @@ class Product
      */
     public function update(): bool
     {
-        $query = "UPDATE " . $this->table_name . " SET name = :name, sku = :sku, price = :price WHERE product_id = :id";
+        $query = "UPDATE " . $this->table_name . " SET name = :name, sku = :sku, price = :price, category = :category, color = :color WHERE product_id = :id";
         $stmt = $this->conn->prepare($query);
 
         // Limpiar datos
         $this->name = htmlspecialchars(strip_tags($this->name));
         $this->sku = htmlspecialchars(strip_tags($this->sku));
+        $this->category = htmlspecialchars(strip_tags($this->category));
+        $this->color = $this->color ? htmlspecialchars(strip_tags($this->color)) : null;
 
         // Enlazar parámetros
         $stmt->bindParam(':name', $this->name);
         $stmt->bindParam(':sku', $this->sku);
         $stmt->bindParam(':price', $this->price);
+        $stmt->bindParam(':category', $this->category);
+        $stmt->bindParam(':color', $this->color);
         $stmt->bindParam(':id', $this->product_id, PDO::PARAM_INT);
 
         return $stmt->execute();

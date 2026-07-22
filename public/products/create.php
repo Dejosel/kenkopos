@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once __DIR__ . '/../../app/Controllers/ProductController.php';
 use App\Controllers\ProductController;
 
@@ -31,17 +34,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <form action="create.php" method="POST">
                             <div class="mb-3">
                                 <label for="sku" class="form-label">SKU (Código único)</label>
-                                <input type="text" class="form-control" id="sku" name="sku" required maxlength="50">
+                                <input type="text" class="form-control" id="sku" name="sku" required maxlength="50" placeholder="Ej: PLT-001">
                             </div>
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nombre del Producto</label>
-                                <input type="text" class="form-control" id="name" name="name" required maxlength="255">
+                                <input type="text" class="form-control" id="name" name="name" required maxlength="255" placeholder="Ej: Hamburguesa Especial">
                             </div>
                             <div class="mb-3">
-                                <label for="price" class="form-label">Precio</label>
-                                <input type="number" step="0.01" class="form-control" id="price" name="price" required>
+                                <label for="category" class="form-label">Categoría</label>
+                                <select class="form-select" id="category" name="category">
+                                    <option value="Platos Fuertes">Platos Fuertes</option>
+                                    <option value="Entradas">Entradas</option>
+                                    <option value="Bebidas">Bebidas</option>
+                                    <option value="Postres">Postres</option>
+                                    <option value="Farmacia">Farmacia</option>
+                                    <option value="General" selected>General</option>
+                                </select>
                             </div>
-                            <div class="d-flex justify-content-between">
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Precio ($)</label>
+                                <input type="number" step="0.01" class="form-control" id="price" name="price" required placeholder="0.00">
+                            </div>
+                            <div class="mb-3">
+                                <label for="color" class="form-label">Color de Botón en POS</label>
+                                <div class="d-flex align-items-center gap-2">
+                                    <input type="color" class="form-control form-control-color" id="color" name="color" value="#0d6efd" title="Seleccionar color">
+                                    <span class="text-muted">Haz clic en el cuadro para elegir un color distintivo.</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-4">
                                 <a href="list.php" class="btn btn-secondary">Cancelar</a>
                                 <button type="submit" class="btn btn-success">Guardar Producto</button>
                             </div>
