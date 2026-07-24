@@ -85,6 +85,15 @@ class Database
                     color VARCHAR(50) DEFAULT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )");
+
+                // Tabla users para el módulo de autenticación (evidencia AA5-EV01)
+                $conn->exec("CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name VARCHAR(100) NOT NULL,
+                    email VARCHAR(100) NOT NULL UNIQUE,
+                    password VARCHAR(255) NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )");
             } else {
                 $conn->exec("CREATE TABLE IF NOT EXISTS products (
                     product_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -92,6 +101,16 @@ class Database
                     sku VARCHAR(50) NOT NULL,
                     price DECIMAL(10,2) NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )");
+
+                // Tabla users para el módulo de autenticación (evidencia AA5-EV01)
+                $conn->exec("CREATE TABLE IF NOT EXISTS users (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(100) NOT NULL,
+                    email VARCHAR(100) NOT NULL,
+                    password VARCHAR(255) NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    UNIQUE KEY email (email)
                 )");
             }
 

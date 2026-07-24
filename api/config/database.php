@@ -3,55 +3,29 @@
 namespace Api\Config;
 
 use PDO;
-use PDOException;
-
-// Requerir el archivo de configuración si las constantes no están definidas
-if (!defined('DB_HOST')) {
-    require_once __DIR__ . '/config.php';
-}
 
 /**
- * Clase Database
+ * Clase Database (Adaptador)
  *
- * Maneja la conexión a la base de datos MySQL utilizando PDO.
- * Implementa el patrón Singleton o simplemente retorna una instancia.
+ * Delega la conexión a la clase Database principal del proyecto KenkoPOS,
+ * que ya gestiona la conexión a InfinityFree con fallback automático a SQLite.
+ * Esto evita duplicar configuraciones y garantiza coherencia entre módulos.
  */
 class Database {
-    private ?PDO $conn = null;
 
     /**
-     * Obtiene la conexión a la base de datos
+     * Obtiene la conexión PDO reutilizando la configuración central del proyecto.
      *
-     * @return PDO|null Retorna la instancia PDO o null si falla
+     * @return PDO Instancia de la conexión activa
      */
-    public function getConnection(): ?PDO {
-        $this->conn = null;
-
-        try {
-            // DSN de conexión
-            $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
-            
-            // Opciones de PDO para un manejo seguro y eficiente
-            $options = [
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                PDO::ATTR_EMULATE_PREPARES   => false,
-            ];
-
-            // Crear instancia de PDO
-            $this->conn = new PDO($dsn, DB_USER, DB_PASS, $options);
-            
-        } catch (PDOException $exception) {
-            // Manejar excepción de conexión
-            // En un entorno de producción, esto debería registrarse en un archivo de log
-            // y no mostrarse directamente para evitar exponer datos sensibles
-            echo json_encode([
-                "success" => false, 
-                "message" => "Error de conexión a la base de datos: " . $exception->getMessage()
-            ]);
-            exit;
+    public function getConnection(): PDO {
+        // Incluir la clase Database principal si aún no ha sido cargada
+        if (!class_exists('Config\Database')) {
+            require_once __DIR__ . '/../../config/database.php';
         }
 
-        return $this->conn;
+        // Instanciar y retornar la conexión del proyecto principal
+        $mainDb = new \Config\Database();
+        return $mainDb->getConnection();
     }
 }

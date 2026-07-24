@@ -7,6 +7,7 @@
  */
 
 // Incluir archivos necesarios del backend existente y de la API
+require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../app/Models/Product.php';
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/helpers/Response.php';
