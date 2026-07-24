@@ -38,12 +38,10 @@ class User {
      */
     public function register(): bool {
         try {
-            // Consulta SQL para insertar
+            // Consulta SQL para insertar (sintaxis estándar compatible con MySQL y SQLite)
             $query = "INSERT INTO " . $this->table_name . "
-                      SET
-                        name = :name,
-                        email = :email,
-                        password = :password";
+                      (name, email, password)
+                      VALUES (:name, :email, :password)";
 
             // Preparar la declaración (statement)
             $stmt = $this->conn->prepare($query);
@@ -82,11 +80,11 @@ class User {
      */
     public function findByEmail(string $email): bool {
         try {
-            // Consulta para buscar usuario por email
+            // Consulta para buscar usuario por email (LIMIT 1 compatible con MySQL y SQLite)
             $query = "SELECT id, name, email, password, created_at
                       FROM " . $this->table_name . "
                       WHERE email = ?
-                      LIMIT 0,1";
+                      LIMIT 1";
 
             // Preparar la declaración
             $stmt = $this->conn->prepare($query);
@@ -100,18 +98,15 @@ class User {
             // Ejecutar
             $stmt->execute();
 
-            // Verificar si el usuario existe
-            $num = $stmt->rowCount();
+            // Obtener la fila directamente (rowCount() no funciona en SELECT con SQLite)
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($num > 0) {
-                // Obtener fila (row)
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
+            if ($row !== false) {
                 // Asignar los valores a las propiedades del objeto
                 $this->id = $row['id'];
                 $this->name = $row['name'];
                 $this->email = $row['email'];
-                $this->password = $row['password']; // Esta es la contraseña encriptada (hash)
+                $this->password = $row['password']; // Contraseña encriptada (hash)
                 $this->created_at = $row['created_at'];
 
                 return true;
