@@ -1,0 +1,12 @@
+Proyecto: KenkoPOS
+Evidencia: GA7-220501096-AA5-EV03 - Diseño y desarrollo de servicios web - proyecto
+Aprendiz: Jose Luis Hernandez
+
+Enlace al Repositorio en GitHub:
+https://github.com/Dejosel/kenkopos
+
+Rama Principal:
+main
+
+Tag de Versión para la Entrega:
+v1.2.0
