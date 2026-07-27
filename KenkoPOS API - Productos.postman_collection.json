@@ -1,0 +1,582 @@
+{
+	"info": {
+		"_postman_id": "ev04-2026-kenkopos-productos",
+		"name": "KenkoPOS API - Productos",
+		"description": "Colección de pruebas CRUD para la API del módulo de Productos de KenkoPOS.\n\nEvidencia: GA7-220501096-AA5-EV04 – API del proyecto\nAprendiz: Jose Luis Hernandez\nPrograma: Tecnólogo en Análisis y Desarrollo de Software (ADSO) - SENA\nRepositorio: https://github.com/Dejosel/kenkopos\nVersión: v1.2.0\n\n## Configuración del Entorno\nAntes de ejecutar, cree un entorno en Postman con la variable:\n- **base_url**: http://localhost/kenkopos  (o el dominio donde esté alojado el proyecto)\n\n## Instrucciones de Uso\n1. Importe esta colección en Postman.\n2. Cree un entorno y defina `base_url`.\n3. Ejecute las peticiones en el orden presentado para un flujo CRUD completo.\n4. Revise la pestaña 'Test Results' para ver los resultados de las pruebas automatizadas.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8555",
+			"type": "string",
+			"description": "URL base del servidor donde corre KenkoPOS. Cambiar según el entorno (local, staging o producción)."
+		}
+	],
+	"item": [
+		{
+			"name": "1. Obtener Todos los Productos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ============================================",
+							"// Tests automáticos - GET /api/products.php",
+							"// GA7-220501096-AA5-EV04 | KenkoPOS - Productos",
+							"// ============================================",
+							"",
+							"pm.test('✅ 1. Código HTTP es 200 OK', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('✅ 2. Content-Type es application/json', function () {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+							"});",
+							"",
+							"pm.test('✅ 3. La respuesta es JSON válido', function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test('✅ 4. El campo \"success\" existe y es true', function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('success');",
+							"    pm.expect(jsonData.success).to.be.true;",
+							"});",
+							"",
+							"pm.test('✅ 5. El campo \"message\" existe', function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('message');",
+							"    pm.expect(jsonData.message).to.be.a('string');",
+							"});",
+							"",
+							"pm.test('✅ 6. Tiempo de respuesta menor a 1000 ms', function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test('✅ 7. La respuesta contiene el campo \"products\" (arreglo)', function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('products');",
+							"    pm.expect(jsonData.products).to.be.an('array');",
+							"});",
+							"",
+							"pm.test('✅ 8. El arreglo de productos tiene al menos un elemento', function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.products.length).to.be.above(0);",
+							"});",
+							"",
+							"pm.test('✅ 9. Cada producto contiene los campos obligatorios', function () {",
+							"    const jsonData = pm.response.json();",
+							"    const product = jsonData.products[0];",
+							"    pm.expect(product).to.have.property('product_id');",
+							"    pm.expect(product).to.have.property('name');",
+							"    pm.expect(product).to.have.property('sku');",
+							"    pm.expect(product).to.have.property('price');",
+							"    pm.expect(product).to.have.property('category');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"description": "Indicamos al servidor que esperamos una respuesta en formato JSON."
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/products.php",
+					"host": ["{{base_url}}"],
+					"path": ["api", "products.php"]
+				},
+				"description": "## Obtener Todos los Productos\n\nRetorna la lista completa de todos los productos registrados en el catálogo del sistema KenkoPOS.\n\n**Método:** `GET`  \n**Endpoint:** `/api/products.php`  \n**Autenticación:** No requerida  \n\n### Respuesta Esperada\n- **HTTP 200 OK**\n- Campo `success: true`\n- Campo `products` con un arreglo de objetos JSON, cada uno con: `product_id`, `name`, `sku`, `price`, `category`, `color`, `created_at`\n\n### Tests Automáticos Incluidos\n1. Código HTTP = 200\n2. Content-Type = application/json\n3. Cuerpo es JSON válido\n4. Campo `success` = true\n5. Campo `message` presente\n6. Tiempo de respuesta < 1000 ms\n7. Campo `products` es arreglo\n8. El arreglo tiene al menos un elemento\n9. Cada producto tiene los campos obligatorios"
+			},
+			"response": [
+				{
+					"name": "200 OK - Productos obtenidos",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products.php",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products.php"]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Productos obtenidos correctamente\",\n    \"products\": [\n        {\n            \"product_id\": 1,\n            \"name\": \"Hamburguesa Especial Premium\",\n            \"sku\": \"PLT-001\",\n            \"price\": 24000,\n            \"category\": \"Platos Fuertes\",\n            \"color\": \"#dc3545\",\n            \"created_at\": \"2026-07-08 20:33:37\"\n        },\n        {\n            \"product_id\": 2,\n            \"name\": \"Pizza Margarita\",\n            \"sku\": \"PLT-002\",\n            \"price\": 18000,\n            \"category\": \"Platos Fuertes\",\n            \"color\": \"#dc3545\",\n            \"created_at\": \"2026-07-08 20:33:37\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "2. Obtener Producto por ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ============================================",
+							"// Tests automáticos - GET /api/products.php?id=1",
+							"// GA7-220501096-AA5-EV04 | KenkoPOS - Productos",
+							"// ============================================",
+							"",
+							"pm.test('✅ 1. Código HTTP es 200 OK', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('✅ 2. Content-Type es application/json', function () {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+							"});",
+							"",
+							"pm.test('✅ 3. La respuesta es JSON válido', function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test('✅ 4. El campo \"success\" existe y es true', function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('success');",
+							"    pm.expect(jsonData.success).to.be.true;",
+							"});",
+							"",
+							"pm.test('✅ 5. El campo \"message\" existe', function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('message');",
+							"});",
+							"",
+							"pm.test('✅ 6. Tiempo de respuesta menor a 1000 ms', function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test('✅ 7. La respuesta contiene el campo \"product\" (objeto individual)', function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('product');",
+							"    pm.expect(jsonData.product).to.be.an('object');",
+							"});",
+							"",
+							"pm.test('✅ 8. El producto tiene el campo product_id igual a 1', function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.product.product_id).to.eql(1);",
+							"});",
+							"",
+							"pm.test('✅ 9. El producto contiene todos los campos requeridos', function () {",
+							"    const product = pm.response.json().product;",
+							"    pm.expect(product).to.have.all.keys('product_id', 'name', 'sku', 'price', 'category', 'color', 'created_at');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/products.php?id=1",
+					"host": ["{{base_url}}"],
+					"path": ["api", "products.php"],
+					"query": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "ID del producto a consultar. Puede modificarse para consultar cualquier producto existente."
+						}
+					]
+				},
+				"description": "## Obtener Producto por ID\n\nRetorna los datos completos de un único producto identificado por su `id` numérico enviado como parámetro en la URL.\n\n**Método:** `GET`  \n**Endpoint:** `/api/products.php?id={id}`  \n**Parámetro URL:** `id` (entero, obligatorio)  \n**Autenticación:** No requerida  \n\n### Respuesta Esperada\n- **HTTP 200 OK** si el producto existe\n- **HTTP 404 Not Found** si no existe\n- Campo `product` con el objeto del producto\n\n### Tests Automáticos Incluidos\n1. Código HTTP = 200\n2. Content-Type = application/json\n3. Cuerpo es JSON válido\n4. Campo `success` = true\n5. Campo `message` presente\n6. Tiempo de respuesta < 1000 ms\n7. Campo `product` es objeto\n8. product_id = 1\n9. Contiene todos los campos obligatorios"
+			},
+			"response": [
+				{
+					"name": "200 OK - Producto encontrado",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products.php?id=1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products.php"],
+							"query": [{ "key": "id", "value": "1" }]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [{ "key": "Content-Type", "value": "application/json; charset=UTF-8" }],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Producto encontrado\",\n    \"product\": {\n        \"product_id\": 1,\n        \"name\": \"Hamburguesa Especial Premium\",\n        \"sku\": \"PLT-001\",\n        \"price\": 24000,\n        \"category\": \"Platos Fuertes\",\n        \"color\": \"#dc3545\",\n        \"created_at\": \"2026-07-08 20:33:37\"\n    }\n}"
+				},
+				{
+					"name": "404 Not Found - Producto no encontrado",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products.php?id=9999",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products.php"],
+							"query": [{ "key": "id", "value": "9999" }]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [{ "key": "Content-Type", "value": "application/json; charset=UTF-8" }],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Producto no encontrado\"\n}"
+				}
+			]
+		},
+		{
+			"name": "3. Crear Producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ============================================",
+							"// Tests automáticos - POST /api/products.php",
+							"// GA7-220501096-AA5-EV04 | KenkoPOS - Productos",
+							"// ============================================",
+							"",
+							"pm.test('✅ 1. Código HTTP es 201 Created', function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test('✅ 2. Content-Type es application/json', function () {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+							"});",
+							"",
+							"pm.test('✅ 3. La respuesta es JSON válido', function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test('✅ 4. El campo \"success\" existe y es true (creación exitosa)', function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('success');",
+							"    pm.expect(jsonData.success).to.be.true;",
+							"});",
+							"",
+							"pm.test('✅ 5. El campo \"message\" confirma la creación correctamente', function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('message');",
+							"    pm.expect(jsonData.message).to.include('creado');",
+							"});",
+							"",
+							"pm.test('✅ 6. Tiempo de respuesta menor a 1000 ms', function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"description": "Obligatorio para indicar al servidor que el cuerpo de la petición está en formato JSON."
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Pizza Personal\",\n    \"sku\": \"PZ001\",\n    \"price\": 22000,\n    \"category\": \"Comidas\",\n    \"color\": \"Rojo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/products.php",
+					"host": ["{{base_url}}"],
+					"path": ["api", "products.php"]
+				},
+				"description": "## Crear Producto\n\nCrea y registra un nuevo producto en el catálogo de KenkoPOS. Los datos del nuevo producto se envían en el cuerpo de la petición en formato JSON.\n\n**Método:** `POST`  \n**Endpoint:** `/api/products.php`  \n**Cabecera:** `Content-Type: application/json`  \n**Autenticación:** No requerida  \n\n### Campos del Body\n| Campo | Tipo | Obligatorio | Descripción |\n|-------|------|-------------|-------------|\n| name | string | ✅ Sí | Nombre del producto |\n| sku | string | ✅ Sí | Código único de inventario |\n| price | number | ✅ Sí | Precio (debe ser > 0) |\n| category | string | ✅ Sí | Categoría |\n| color | string | ❌ No | Color en HEX o nombre |\n\n### Respuesta Esperada\n- **HTTP 201 Created** con `success: true`\n\n### Tests Automáticos Incluidos\n1. Código HTTP = 201\n2. Content-Type = application/json\n3. Cuerpo es JSON válido\n4. Campo `success` = true\n5. Campo `message` incluye 'creado'\n6. Tiempo de respuesta < 1000 ms"
+			},
+			"response": [
+				{
+					"name": "201 Created - Producto creado exitosamente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json", "type": "text" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Pizza Personal\",\n    \"sku\": \"PZ001\",\n    \"price\": 22000,\n    \"category\": \"Comidas\",\n    \"color\": \"Rojo\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products.php",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products.php"]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [{ "key": "Content-Type", "value": "application/json; charset=UTF-8" }],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Producto creado correctamente\"\n}"
+				},
+				{
+					"name": "400 Bad Request - Datos incompletos",
+					"originalRequest": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json", "type": "text" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Pizza Personal\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products.php",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products.php"]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [{ "key": "Content-Type", "value": "application/json; charset=UTF-8" }],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Datos incompletos. Nombre, SKU, precio y categoría son obligatorios.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "4. Actualizar Producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ============================================",
+							"// Tests automáticos - PUT /api/products.php",
+							"// GA7-220501096-AA5-EV04 | KenkoPOS - Productos",
+							"// ============================================",
+							"",
+							"pm.test('✅ 1. Código HTTP es 200 OK (actualización exitosa)', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('✅ 2. Content-Type es application/json', function () {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+							"});",
+							"",
+							"pm.test('✅ 3. La respuesta es JSON válido', function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test('✅ 4. El campo \"success\" existe y es true', function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('success');",
+							"    pm.expect(jsonData.success).to.be.true;",
+							"});",
+							"",
+							"pm.test('✅ 5. El campo \"message\" confirma la actualización correctamente', function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('message');",
+							"    pm.expect(jsonData.message).to.include('actualizado');",
+							"});",
+							"",
+							"pm.test('✅ 6. Tiempo de respuesta menor a 1000 ms', function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"description": "Obligatorio para el envío del cuerpo JSON con los datos a actualizar."
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"product_id\": 1,\n    \"name\": \"Pizza Especial\",\n    \"sku\": \"PZ001\",\n    \"price\": 25000,\n    \"category\": \"Comidas\",\n    \"color\": \"Negro\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/products.php",
+					"host": ["{{base_url}}"],
+					"path": ["api", "products.php"]
+				},
+				"description": "## Actualizar Producto\n\nModifica los datos de un producto existente en el catálogo. Se debe enviar el `product_id` en el body JSON para identificar qué producto se va a actualizar.\n\n**Método:** `PUT`  \n**Endpoint:** `/api/products.php`  \n**Cabecera:** `Content-Type: application/json`  \n**Autenticación:** No requerida  \n\n### Campos del Body\n| Campo | Tipo | Obligatorio | Descripción |\n|-------|------|-------------|-------------|\n| product_id | integer | ✅ Sí | ID del producto a actualizar |\n| name | string | ✅ Sí | Nuevo nombre |\n| sku | string | ✅ Sí | Nuevo SKU |\n| price | number | ✅ Sí | Nuevo precio (> 0) |\n| category | string | ✅ Sí | Nueva categoría |\n| color | string | ❌ No | Nuevo color |\n\n### Respuesta Esperada\n- **HTTP 200 OK** con `success: true`\n\n### Tests Automáticos Incluidos\n1. Código HTTP = 200\n2. Content-Type = application/json\n3. Cuerpo es JSON válido\n4. Campo `success` = true\n5. Campo `message` incluye 'actualizado'\n6. Tiempo de respuesta < 1000 ms"
+			},
+			"response": [
+				{
+					"name": "200 OK - Producto actualizado correctamente",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [{ "key": "Content-Type", "value": "application/json", "type": "text" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\": 1,\n    \"name\": \"Pizza Especial\",\n    \"sku\": \"PZ001\",\n    \"price\": 25000,\n    \"category\": \"Comidas\",\n    \"color\": \"Negro\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products.php",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products.php"]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [{ "key": "Content-Type", "value": "application/json; charset=UTF-8" }],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Producto actualizado correctamente\"\n}"
+				},
+				{
+					"name": "404 Not Found - Producto no existe",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [{ "key": "Content-Type", "value": "application/json", "type": "text" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\": 9999,\n    \"name\": \"No Existe\",\n    \"sku\": \"NOPE\",\n    \"price\": 1000,\n    \"category\": \"Test\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products.php",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products.php"]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [{ "key": "Content-Type", "value": "application/json; charset=UTF-8" }],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Producto no encontrado para actualizar.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "5. Eliminar Producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ============================================",
+							"// Tests automáticos - DELETE /api/products.php?id=1",
+							"// GA7-220501096-AA5-EV04 | KenkoPOS - Productos",
+							"// ============================================",
+							"",
+							"pm.test('✅ 1. Código HTTP es 200 OK (eliminación exitosa)', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('✅ 2. Content-Type es application/json', function () {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+							"});",
+							"",
+							"pm.test('✅ 3. La respuesta es JSON válido', function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test('✅ 4. El campo \"success\" existe y es true', function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('success');",
+							"    pm.expect(jsonData.success).to.be.true;",
+							"});",
+							"",
+							"pm.test('✅ 5. El campo \"message\" confirma la eliminación correctamente', function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('message');",
+							"    pm.expect(jsonData.message).to.include('eliminado');",
+							"});",
+							"",
+							"pm.test('✅ 6. Tiempo de respuesta menor a 1000 ms', function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/products.php?id=1",
+					"host": ["{{base_url}}"],
+					"path": ["api", "products.php"],
+					"query": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "ID del producto a eliminar. Asegúrese de que el ID exista antes de ejecutar."
+						}
+					]
+				},
+				"description": "## Eliminar Producto\n\nElimina de forma permanente un producto del catálogo de KenkoPOS. El ID del producto a eliminar debe enviarse como parámetro en la URL (`?id=`). Esta operación es **irreversible**.\n\n**Método:** `DELETE`  \n**Endpoint:** `/api/products.php?id={id}`  \n**Parámetro URL:** `id` (entero, obligatorio)  \n**Autenticación:** No requerida  \n\n> ⚠️ **Advertencia:** Cambiar el `id` antes de ejecutar si se desea conservar el producto con ID=1. Se recomienda primero crear un producto de prueba con POST y luego eliminar ese ID.\n\n### Respuesta Esperada\n- **HTTP 200 OK** con `success: true`\n\n### Tests Automáticos Incluidos\n1. Código HTTP = 200\n2. Content-Type = application/json\n3. Cuerpo es JSON válido\n4. Campo `success` = true\n5. Campo `message` incluye 'eliminado'\n6. Tiempo de respuesta < 1000 ms"
+			},
+			"response": [
+				{
+					"name": "200 OK - Producto eliminado correctamente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products.php?id=1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products.php"],
+							"query": [{ "key": "id", "value": "1" }]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [{ "key": "Content-Type", "value": "application/json; charset=UTF-8" }],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Producto eliminado correctamente\"\n}"
+				},
+				{
+					"name": "404 Not Found - Producto no existe",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products.php?id=9999",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products.php"],
+							"query": [{ "key": "id", "value": "9999" }]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [{ "key": "Content-Type", "value": "application/json; charset=UTF-8" }],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Producto no encontrado para eliminar.\"\n}"
+				}
+			]
+		}
+	]
+}
