@@ -28,14 +28,15 @@ slides = [
 
     {"title": "Funcionalidades implementadas", "bullets": [
         "CRUD completo de productos (crear, listar, editar, eliminar)",
-        "Interfaz POS interactiva (ticket en memoria, descuentos, impresión)",
-        "Inicialización de BD y seeds automáticos (productos demo)"
-    ], "notes": "Mostrar evidencias con rutas y archivos clave del repo."},
+        "Interfaz POS interactiva (SambaPOS Style, descuentos, recibos)",
+        "Persistencia de comanda/ventas en BD (tablas orders y order_items)",
+        "Gestión y control de acceso por Roles (admin, cajero, mesero)",
+        "Inicialización de BD y seeds automáticos (comida y operadores demo)"
+    ], "notes": "Destacar que se resolvieron las prioridades de persistencia y control de roles."},
 
     {"title": "Funcionalidades no implementadas", "bullets": [
-        "Persistencia de ventas/comandas en BD (orders, items)",
-        "Gestión de inventarios, clientes y roles de usuario",
-        "Reportes y cierre de caja automatizado"
+        "Gestión avanzada de inventarios y clientes",
+        "Reportes avanzados y cierre de caja automatizado"
     ], "notes": "Priorizar qué falta para convertirlo en POS productivo."},
 
     {"title": "CRUD de Productos — Detalle técnico", "bullets": [
@@ -46,9 +47,10 @@ slides = [
 
     {"title": "Tablas MySQL detectadas", "bullets": [
         "`products` (campos: product_id, name, sku, price, category, color, created_at)",
-        "En Laravel: tablas auxiliares (`users`, `sessions`, `jobs`, `cache`)",
-        "Scripts SQL: `database/kenkopos.sql`, `database/kenkopos_infinityfree.sql`"
-    ], "notes": "Indicar que producto es la tabla principal para el MVP POS."},
+        "`users` (campos: id, name, email, password, role, created_at)",
+        "`orders` & `order_items` (comandas y ventas persistidas en la BD)",
+        "En Laravel: tablas auxiliares (`users`, `sessions`, `jobs`, `cache`)"
+    ], "notes": "Mencionar que las tablas de órdenes completan la arquitectura relacional transaccional."},
 
     {"title": "Historias de Usuario reales", "bullets": [
         "HU-01 Registrar producto — Formulario y validación",
@@ -59,37 +61,36 @@ slides = [
     {"title": "Arquitectura del sistema", "bullets": [
         "MVC simplificado en PHP + patrón Singleton para BD",
         "Migración a Laravel con Eloquent (mejor mantenibilidad)",
-        "Frontend POS desacoplado (JS) que consume catálogo en JSON"
+        "Frontend POS desacoplado (JS) que consume catálogo y guarda órdenes en JSON"
     ], "notes": "Sugerir un diagrama de componentes para la siguiente fase."},
 
     {"title": "UML sugerido", "bullets": [
         "Diagrama de Casos de Uso: Administrador CRUD, Cajero POS",
-        "Diagrama de Clases: Database, Product, ProductController, Response",
-        "Diagrama de Secuencia: Crear producto y flujo de venta"
+        "Diagrama de Clases: Database, Product, ProductController, Response, Order",
+        "Diagrama de Secuencia: Crear producto y flujo de venta persistente"
     ], "notes": "Ofrecer generar imágenes UML si lo desean (plantuml o draw.io)."},
 
     {"title": "Mejoras futuras — Prioridad Alta", "bullets": [
         "Unificar código en Laravel y alinear esquema (`category`, `color`)",
-        "Persistir ventas: `orders`, `order_items`, `payments`, `tables`",
-        "Implementar autenticación y roles (admin, cajero, mesero)"
+        "Reportes avanzados y dashboards visuales de ventas",
+        "Integración con impresoras térmicas y TPV físico"
     ], "notes": "Explicar impacto en operación y tiempos estimados por fase."},
 
     {"title": "Mejoras futuras — Prioridad Media/Baja", "bullets": [
-        "Reportes y dashboards de ventas diarias y producto TOP",
-        "Integración con impresoras térmicas y TPV físico",
+        "Soporte para múltiples sucursales y sincronización en la nube",
         "APIs para integraciones con delivery y contabilidad"
     ], "notes": "Plantear roadmap y requisitos no funcionales (seguridad, backup)."},
 
     {"title": "Roadmap propuesto", "bullets": [
-        "Fase 1 (2-4 semanas): Consolidar Laravel + paridad funcional",
-        "Fase 2 (4-6 semanas): Persistencia de ventas y roles",
-        "Fase 3: Reportes, despliegue y hardening para producción"
+        "Fase 1 (Logrado): Persistencia de ventas, roles y comanda",
+        "Fase 2 (2-4 semanas): Consolidar Laravel + paridad funcional",
+        "Fase 3: Reportes avanzados, TPV y hardening para producción"
     ], "notes": "Incluir estimaciones aproximadas y dependencias técnicas."},
 
     {"title": "Cierre ejecutivo", "bullets": [
-        "KenkoPOS ya tiene CRUD y POS visual operativo",
-        "Sigue trabajo para convertirlo en POS transaccional completo",
-        "Propuesta: comenzar migración completa a Laravel y persistencia ventas"
+        "KenkoPOS ya cuenta con persistencia de ventas y roles operando",
+        "Sigue el trabajo de unificación tecnológica y reportes",
+        "Propuesta: comenzar la migración completa a Laravel"
     ], "notes": "Invitar a la gerencia a aprobar roadmap y recursos necesarios."}
 ]
 
