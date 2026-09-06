@@ -7,3 +7,4 @@ Thumbs.db
 *.zip
 __pycache__/
 *.pyc
+.phpunit.cache/

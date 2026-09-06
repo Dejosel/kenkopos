@@ -1,0 +1,30 @@
+SERVICIO NACIONAL DE APRENDIZAJE – SENA
+Programa: Tecnólogo en Análisis y Desarrollo de Software (ADSO)
+Evidencia: GA9-220501096-AA1-EV01 - Taller sobre codificación de módulos del software (Pruebas de software)
+Aprendiz: Jose Luis Hernandez
+Fecha: Septiembre 2026
+
+Repositorio Oficial en GitHub:
+https://github.com/Dejosel/kenkopos
+
+Rama Principal:
+main
+
+Versión del Sistema:
+v1.5.0 (PHP Web Stack + Testing Suite)
+
+Contenido de la Entrega:
+1. GA9-220501096-AA1-EV01_Taller_Pruebas_Software.pdf (Documento técnico con desarrollo completo y capturas)
+2. tests/ (Suites de pruebas unitarias e integración en PHPUnit 12)
+3. phpunit.xml (Configuración de pruebas de backend)
+4. KenkoPOS API - Productos.postman_collection.json (Colección de pruebas automáticas con 36 aserciones)
+5. assets/ (Capturas de pantalla reales de la ejecución de PHPUnit, Newman CLI, Postman UI y el POS)
+6. Código fuente del proyecto KenkoPOS (api, app, config, database, public)
+
+Instrucciones para Ejecutar las Pruebas:
+- Pruebas Unitarias e Integración (PHPUnit):
+  laravel-app/vendor/bin/phpunit --configuration phpunit.xml
+
+- Pruebas Automatizadas de API REST (Newman CLI):
+  php -S 127.0.0.1:8555 &
+  npx newman run "KenkoPOS API - Productos.postman_collection.json" --env-var "base_url=http://127.0.0.1:8555"

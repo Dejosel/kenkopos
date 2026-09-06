@@ -1,0 +1,2 @@
+# Impedir acceso público directo en Apache 2.4+
+Require all denied
