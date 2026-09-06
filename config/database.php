@@ -34,17 +34,26 @@ class Database
         $this->conn = null;
         $driver = 'mysql';
 
-        try {
-            $dsn = "mysql:host={$this->host};dbname={$this->db_name};charset=utf8mb4";
-            // Establecer un timeout bajo (3 segundos) para no ralentizar la ejecución local en caso de que falle la red
-            $options = [
-                PDO::ATTR_TIMEOUT => 3,
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-            ];
-            $this->conn = new PDO($dsn, $this->username, $this->password, $options);
-            $driver = 'mysql';
-        } catch (PDOException $exception) {
+        $hostsToTry = array_unique([$this->host, 'sql213.epizy.com']);
+        foreach ($hostsToTry as $currentHost) {
+            try {
+                $dsn = "mysql:host={$currentHost};dbname={$this->db_name};charset=utf8mb4";
+                // Establecer un timeout bajo (3 segundos) para no ralentizar la ejecución local en caso de que falle la red
+                $options = [
+                    PDO::ATTR_TIMEOUT => 3,
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                ];
+                $this->conn = new PDO($dsn, $this->username, $this->password, $options);
+                $driver = 'mysql';
+                break;
+            } catch (PDOException $exception) {
+                // Intentar siguiente host
+                continue;
+            }
+        }
+
+        if (!$this->conn) {
             // Intentar conectar a una base de datos SQLite local
             try {
                 $sqliteDir = dirname(__DIR__) . '/database';
