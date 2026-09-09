@@ -38,7 +38,7 @@ if (!$product) {
     <!-- Navbar con logo -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 mb-4">
         <a class="navbar-brand d-flex align-items-center gap-2" href="../pos.php">
-            <img src="../assets/img/logo_kenkopos.png" alt="KenkoPOS" height="38" style="object-fit:contain;">
+            <img src="../assets/img/logo_kenkopos.png" alt="KenkoPOS" height="70" style="object-fit:contain;">
         </a>
         <div class="d-flex gap-2 ms-auto">
             <a href="list.php" class="btn btn-outline-light btn-sm">

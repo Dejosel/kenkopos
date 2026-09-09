@@ -21,7 +21,7 @@ $products = $controller->index();
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="d-flex align-items-center gap-3">
-                <img src="../assets/img/logo_kenkopos.png" alt="KenkoPOS" height="45" style="object-fit:contain;">
+                <img src="../assets/img/logo_kenkopos.png" alt="KenkoPOS" height="75" style="object-fit:contain;">
                 <h2 class="mb-0">Gestión de Productos</h2>
             </div>
             <div>
