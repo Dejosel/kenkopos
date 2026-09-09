@@ -1,6 +1,5 @@
 # SERVICIO NACIONAL DE APRENDIZAJE – SENA
-## Centro de Teleinformática y Producción Industrial / Regional Colombia
-### Tecnólogo en Análisis y Desarrollo de Software (ADSO) – Ficha 2721428
+### Tecnólogo en Análisis y Desarrollo de Software (ADSO) – Ficha 3140775
 
 ---
 
@@ -25,9 +24,9 @@
 | **Repositorio Oficial (GitHub)** | [https://github.com/Dejosel/kenkopos](https://github.com/Dejosel/kenkopos) |
 | **Versión del Sistema** | v1.5.0 (PHP Web Stack + Testing Suite) |
 | **Aprendiz** | Jose Luis Hernandez |
-| **Instructor Asignado** | Equipo de Instructores Área de Software ADSO |
+| **Instructora Asignada** | Luz Karime Castellanos |
 | **Centro de Formación** | Servicio Nacional de Aprendizaje – SENA |
-| **Fecha de Elaboración** | Septiembre 2026 |
+| **Fecha de Elaboración** | Septiembre 6 de 2026 |
 
 ---
 

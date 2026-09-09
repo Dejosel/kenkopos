@@ -2,12 +2,17 @@
 
 /**
  * Punto de entrada para inicio de sesión (Endpoint: POST /api/login.php)
+ * Devuelve un JWT firmado si las credenciales son correctas.
  */
 
 // Incluir archivos necesarios
 require_once __DIR__ . '/../config/database.php'; // DB principal (InfinityFree + SQLite fallback)
 require_once __DIR__ . '/config/database.php';     // Adaptador que delega al principal
+require_once __DIR__ . '/config/config.php';       // JWT_SECRET y JWT_EXPIRATION
 require_once __DIR__ . '/helpers/Response.php';
+require_once __DIR__ . '/helpers/JWT.php';
+require_once __DIR__ . '/helpers/Auth.php';
+require_once __DIR__ . '/models/Role.php';
 require_once __DIR__ . '/models/User.php';
 require_once __DIR__ . '/controllers/AuthController.php';
 
@@ -23,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // Obtener la conexión a la base de datos
 $database = new Database();
-$db = $database->getConnection();
+$db       = $database->getConnection();
 
 // Instanciar el modelo y controlador
-$user = new User($db);
+$user           = new User($db);
 $authController = new AuthController($user);
 
 // Obtener los datos JSON enviados en el cuerpo (body) de la petición

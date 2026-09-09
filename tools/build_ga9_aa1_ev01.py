@@ -329,7 +329,8 @@ def main():
 Programa: Tecnólogo en Análisis y Desarrollo de Software (ADSO)
 Evidencia: GA9-220501096-AA1-EV01 - Taller sobre codificación de módulos del software (Pruebas de software)
 Aprendiz: Jose Luis Hernandez
-Fecha: Septiembre 2026
+Instructora: Luz Karime Castellanos
+Fecha: Septiembre 6 de 2026
 
 Repositorio Oficial en GitHub:
 https://github.com/Dejosel/kenkopos
