@@ -1,2 +1,11 @@
 # Evitar el listado de archivos en directorios sin index
 Options -Indexes
+
+# Habilitar el paso del encabezado Authorization para JWT (vital en InfinityFree/FastCGI)
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+</IfModule>
+CGIPassAuth On
