@@ -362,8 +362,7 @@ sort($categories);
     <div id="login-screen" class="d-none align-items-center justify-content-center" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #090d16 0%, #1e293b 100%); z-index: 99999; overflow-y: auto;">
         <div class="card border-0 shadow-lg p-4 mx-3" style="width: 100%; max-width: 450px; background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;">
             <div class="text-center mb-4">
-                <i class="bi bi-shield-lock-fill text-warning fs-1 mb-2"></i>
-                <h3 class="fw-bold text-white mb-1">Kenko<span class="text-warning">POS</span></h3>
+                <img src="assets/img/logo_kenkopos.png" alt="KenkoPOS" height="90" style="object-fit:contain; margin-bottom: 15px;">
                 <p class="text-white-50 small">Control de Acceso Operadores</p>
             </div>
             
