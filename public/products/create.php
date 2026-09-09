@@ -17,13 +17,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Producto - KenkoPOS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body class="bg-light">
-    <div class="container mt-5">
+
+    <!-- Navbar con logo -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 mb-4">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="../pos.php">
+            <img src="../assets/img/logo_kenkopos.png" alt="KenkoPOS" height="38" style="object-fit:contain;">
+        </a>
+        <div class="d-flex gap-2 ms-auto">
+            <a href="list.php" class="btn btn-outline-light btn-sm">
+                <i class="bi bi-arrow-left me-1"></i> Volver al Catálogo
+            </a>
+            <a href="../pos.php" class="btn btn-outline-warning btn-sm">
+                <i class="bi bi-receipt me-1"></i> POS
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow-sm">
-                    <div class="card-header bg-primary text-white">
+                    <div class="card-header bg-primary text-white d-flex align-items-center gap-2">
+                        <i class="bi bi-plus-circle-fill fs-5"></i>
                         <h4 class="mb-0">Crear Nuevo Producto</h4>
                     </div>
                     <div class="card-body">
