@@ -196,7 +196,10 @@ if ($totalOrders > 0) {
     <!-- Navbar Superior -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom mb-4">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold fs-3" href="#">Kenko<span>POS</span> Reportes</a>
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <img src="assets/img/logo_kenkopos.png" alt="KenkoPOS" height="40" style="object-fit:contain;">
+                <span class="fw-semibold fs-5 text-white">Reportes</span>
+            </a>
             <div class="d-flex gap-2">
                 <a href="pos.php" class="btn btn-outline-warning">
                     <i class="bi bi-receipt me-1"></i> Pantalla POS

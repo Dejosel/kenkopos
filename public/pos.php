@@ -55,7 +55,9 @@ sort($categories);
     <!-- Header superior del POS -->
     <header class="pos-header">
         <div class="d-flex align-items-center gap-3">
-            <div class="pos-logo">Kenko<span>POS</span></div>
+            <div class="pos-logo">
+                <img src="assets/img/logo_kenkopos.png" alt="KenkoPOS" height="42" style="object-fit:contain; vertical-align:middle;">
+            </div>
             <span class="db-indicator <?= strpos(strtolower($dbEngine), 'sqlite') !== false ? 'sqlite' : 'mysql' ?>">
                 <i class="bi bi-database-fill me-1"></i> <?= htmlspecialchars($dbEngine) ?>
             </span>
