@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let searchQuery = "";
     let activePaymentMethod = 'Efectivo';
     let activeOperator = null;  // Guardará { name, email, role }
+    let activeToken = null;       // JWT Bearer token del operador autenticado
     
     // Elementos DOM
     const ticketTableBody = document.getElementById('ticket-table-body');
@@ -514,11 +515,12 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         // Enviar vía POST a api/orders.php
+        const orderHeaders = { 'Content-Type': 'application/json' };
+        if (activeToken) orderHeaders['Authorization'] = 'Bearer ' + activeToken;
+
         fetch('../api/orders.php', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: orderHeaders,
             body: JSON.stringify(orderData)
         })
         .then(res => res.json())
@@ -718,12 +720,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function checkOperatorSession() {
         const stored = localStorage.getItem('kenkopos_operator');
-        if (stored) {
+        const storedToken = localStorage.getItem('kenkopos_token');
+        if (stored && storedToken) {
             try {
                 activeOperator = JSON.parse(stored);
+                activeToken = storedToken;
                 updateOperatorUI();
             } catch (e) {
                 localStorage.removeItem('kenkopos_operator');
+                localStorage.removeItem('kenkopos_token');
                 showLoginScreen();
             }
         } else {
@@ -795,7 +800,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     email: data.user.email,
                     role: data.user.role
                 };
+                activeToken = data.token || null;
                 localStorage.setItem('kenkopos_operator', JSON.stringify(activeOperator));
+                if (activeToken) localStorage.setItem('kenkopos_token', activeToken);
                 updateOperatorUI();
                 hideLoginScreen();
                 document.getElementById('pos-login-form').reset();
@@ -816,7 +823,9 @@ document.addEventListener('DOMContentLoaded', function() {
     window.logoutOperator = function() {
         if (confirm("¿Estás seguro de que deseas cerrar la sesión de " + (activeOperator ? activeOperator.name : 'operador') + "?")) {
             localStorage.removeItem('kenkopos_operator');
+            localStorage.removeItem('kenkopos_token');
             activeOperator = null;
+            activeToken = null;
             resetTicket();
             showLoginScreen();
         }
